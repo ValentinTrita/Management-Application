@@ -24,3 +24,5 @@ Secondary objectives:
 -cases where we don't have employee registered or projects
 -validation for project tables and new employee
 
+npm install -g live-server
+live-server
