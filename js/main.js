@@ -59,10 +59,11 @@ function createTable() {
 
 function createRow(person, i) {
     const rowIndex = i + 1;
+    const projectName = person.project ? person.project : '-';
     let rowStr = '<tr>';
     rowStr += '<td>' + rowIndex + '</td>';
     rowStr += '<td>' + person.name + '</td>';
-    rowStr += '<td>' + person.project + '</td>';
+    rowStr += '<td>' + projectName + '</td>';
     rowStr += '<td>' + person.birthdate + '</td>';
     rowStr += '<td>' + person.hired + '</td>';
     rowStr += '<td>' + person.phone + '</td>';
