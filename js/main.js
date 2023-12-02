@@ -11,50 +11,26 @@ function checkUserLogin() {
     }
 }
 
-const employeesArr = [
-    {
-       name: 'Alex',
-       age: '28',
-       project: null, 
-       birthdate: '1995-01-10',
-       hired: '2020-10-05',
-       phone: '0743282329',
-       email: 'alex@icloud.com'
-    },
-    {
-        name: 'radu',
-        age: '25',
-        project: null, 
-        birthdate: '1998-01-10',
-        hired: '2020-11-05',
-        phone: '0747282329',
-        email: 'radu@icloud.com'
-     },
-     {
-        name: 'Mada',
-        age: '24',
-        project: null, 
-        birthdate: '1999-01-11',
-        hired: '2023-10-05',
-        phone: '0743265329',
-        email: 'Mada@icloud.com'
-     }
-];
+const empFromLocalStorage = localStorage.getItem('employeesArr');
+let employeesArr = JSON.parse(empFromLocalStorage);
 
 function createTable() {
-    const table = document.getElementById('employees_table');
 
-    let tableStr = '<tr><th>No.</th><th>Name</th><th>Project</th><th>Birthdate</th><th>Hired at</th><th>Phone</th><th>Email</th></tr>';
+    if (employeesArr && employeesArr.length === 0) {
+         document.getElementById('no_emp_container').style.display = 'block';
+         document.getElementById('table_container').style.display = 'none';
+    } else {
+
+const table = document.getElementById('employees_table');
+
+let tableStr = '<tr><th>No.</th><th>Name</th><th>Project</th><th>Birthdate</th><th>Hired at</th><th>Phone</th><th>Email</th><th>Actions</th>';
      
      employeesArr.forEach((person, i) => {
-        tableStr += createRow(person, i);
-
+     tableStr += createRow(person, i);
      });
 
-     console.log(tableStr);
-
      table.innerHTML = tableStr;
-
+    }
 }
 
 function createRow(person, i) {
@@ -75,49 +51,109 @@ function displayAddForm() {
     document.getElementById('add_form_container').style.display = 'block';
     document.getElementById('add_container').style.display = 'none';
 }
-    function cancelAddForm() {
-        const userConfirm = confirm('Are you sure you want to cancel? ')
+function cancelAddForm() {
+const userConfirm = confirm('Are you sure you want to cancel? ')
 
         if (userConfirm) {
-            document.getElementById('add_form').reset();
-            document.getElementById('add_form_container').style.display = 'none';
-            document.getElementById('add_container').style.display = 'block';
+            clearAndHideForm();
         }
     }
+function clearAndHideForm() {
+           document.getElementById('add_form').reset();
+           document.getElementById('add_form_container').style.display = 'none';
+           document.getElementById('add_container').style.display = 'block'
+        }
 
-    function addNewUser() {
-        console.log('adding...');
+function addNewUser() {
+
+        const newDate = new Date();
+        const year = newDate.getFullYear();
+        const month = newDate.getMonth()+ 1;
+        const monthToAdd = (month < 10 ) ? '0' +  month : month;
+        const day = newDate.getDate();
+
+
+        const newEmpObj = {
+            name: document.getElementById('name').value,
+            age: document.getElementById('age').value,
+            birthdate: document.getElementById('birthdate').value,
+            phone: document.getElementById('phone').value,
+            email: document.getElementById('email').value,
+            hired: year + '-' + month + '-' + day,
+            project: null,
+
+        }
+
+        employeesArr.push(newEmpObj);
+        localStorage.setItem('employeesArr', JSON.stringify(employeesArr));
+        createTable();
+        clearAndHideForm();
     }
 
-    function checkName() {
+let initialValidationObj = {
+    name: false,
+    age: false,
+    birthdate: false,
+    phone: false,
+    email: false,
+    }
+let validationObj = initialValidationObj;
+
+function checkValidationObj() {
+          const validationKeys = Object.keys(validationObj);
+          let flag = true;
+          validationKeys.forEach(key => {
+            if(!validationObj[key]) {
+                flag = false;
+            }
+          });
+
+          if(flag) {
+            document.getElementById('add_button').disabled = false;
+          } else {
+            document.getElementById('add_button').disabled = true;
+
+          }
+    }
+
+
+function checkName() {
         const name_el = document.getElementById('name');
         const name = name_el.value;
-        console.log('value', name);
+
+        
         if(name === '' || name === null) {
             document.getElementById('name_err').style.display = 'block';
             name_el.classList.add('input_err');
+            validationObj.name = false;
         } else {
             document.getElementById('name_err').style.display = 'none';
             name_el.classList.remove('input_err');
+            validationObj.name = true;
         
        }
+       checkValidationObj();
     }
 
-    function checkAge() {
+function checkAge() {
         const age_el = document.getElementById('age');
         const age = age_el.value;
 
        
         if(age !== '' && !isNaN(age) && age >= 18 && age <= 65) {
             document.getElementById('age_err').style.display = 'none';
-            age_el.classList.remove('input_err');        
+            age_el.classList.remove('input_err');
+            validationObj.age = true;
+                    
         } else {
             document.getElementById('age_err').style.display = 'block';
             age_el.classList.remove('input_err'); 
+            validationObj.age = false;
         
        }
+       checkValidationObj();
     }
-        function checkElement(element) {
+function checkElement(element) {
          const html_el = document.getElementById(element);
          const el_value = html_el.value;
 
@@ -137,9 +173,12 @@ function displayAddForm() {
          if(el_value === '' ||  !patt.test(el_value)) {
             document.getElementById(element + '_err').style.display = 'block';
             html_el.classList.add('input_err');
+            validationObj[element] = false;
         } else {
             document.getElementById(element + '_err').style.display = 'none';
             html_el.classList.remove('input_err');
+            validationObj[element] = true;
         
        }
+       checkValidationObj();
     }

@@ -76,14 +76,16 @@
 
            <div>
             <button class="cancelButton" onclick="cancelAddForm()" type="button">Cancel</button>
-            <button class="addEmpButton" onclick="addNewUser()" type="button" disabled>Add</button>
+            <button class="addEmpButton" onclick="addNewUser()" type="button" disabled id="add_button">Add</button>
             <button type="submit" style="display: none;">Submit</button>
            </div>
-        </form>
-
+          </form>
+      </div>
+      <div id="no_emp_container" class="no_emp_container">
+                 No employees saved yet.
       </div>
 
-        <div class="table_container">
+        <div class="table_container" id="table_container">
             <table id="employees_table" cellspacing="0" cellpadding="7"></table>
         </div>
 
