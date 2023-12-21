@@ -32,6 +32,34 @@ let tableStr = '<tr><th>No.</th><th>Name</th><th>Project</th><th>Birthdate</th><
      table.innerHTML = tableStr;
     }
 }
+function deleteEmp (i) {
+
+  if(confirm('Are you sure you want to delete' + employeesArr[i].name + '?')) {
+    employeesArr.splice(i, 1);
+    localStorage.setItem('employeesArr', JSON.stringify(employeesArr));
+    createTable();
+  }
+}
+
+let saveEmpIndex  = 0;
+function editEmp(i) {
+    saveEmpIndex = i;
+    displayAddForm();
+    document.getElementById('add_button').style.display = 'none';
+    document.getElementById('edit_button').style.display = 'inline-block';
+
+
+    const validationKeys = Object.keys(validationObj);
+    validationKeys.forEach(key => {
+        document.getElementById(key).value = employeesArr[i][key];
+        validationObj[key] = true;
+    });
+    checkValidationObj();
+}
+
+function saveEditEmp() {
+
+}
 
 function createRow(person, i) {
     const rowIndex = i + 1;
@@ -44,12 +72,23 @@ function createRow(person, i) {
     rowStr += '<td>' + person.hired + '</td>';
     rowStr += '<td>' + person.phone + '</td>';
     rowStr += '<td>' + person.email + '</td>';
+    rowStr += '<td><button class="editButton" onclick="editEmp(' + i + ')">Edit</button><button class="deleteButton" onclick="deleteEmp(' + i + ')">Delete</button></td>';
     rowStr += '</tr>';
     return rowStr;
 }
+
 function displayAddForm() {
     document.getElementById('add_form_container').style.display = 'block';
     document.getElementById('add_container').style.display = 'none';
+
+    document.getElementById('add_button').style.display = 'inline-block';
+    document.getElementById('edit_button').style.display = 'none';
+
+    const validationKeys = Object.keys(validationObj);
+    validationKeys.forEach(key => {
+        validationObj[key] = false;
+    })
+    checkValidationObj();
 }
 function cancelAddForm() {
 const userConfirm = confirm('Are you sure you want to cancel? ')
@@ -110,8 +149,11 @@ function checkValidationObj() {
 
           if(flag) {
             document.getElementById('add_button').disabled = false;
+            document.getElementById('edit_button').disabled = false;
+            
           } else {
             document.getElementById('add_button').disabled = true;
+            document.getElementById('edit_button').disabled = true;
 
           }
     }

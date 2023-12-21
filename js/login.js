@@ -2,7 +2,7 @@ function checkUserPass() {
      const username = document.getElementById('username').value; 
      const password = document.getElementById('password').value; 
 
-     if (username === 'Valentin1' && password === 'cascaval') {
+     if (username === 'Valentin' && password === 'cascaval') {
         document.getElementById('try_succes').style.display = 'block';
         document.getElementById('try_error').style.display = 'none';
 
