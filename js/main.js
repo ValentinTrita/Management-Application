@@ -23,7 +23,7 @@ function createTable() {
 
 const table = document.getElementById('employees_table');
 
-let tableStr = '<tr><th>No.</th><th>Name</th><th>Project</th><th>Birthdate</th><th>Hired at</th><th>Phone</th><th>Email</th><th>Actions</th>';
+let tableStr = '<tr><th>No.</th><th>Name</th><th>Age</th><th>Project</th><th>Birthdate</th><th>Hired at</th><th>Phone</th><th>Email</th><th>Actions</th>';
      
      employeesArr.forEach((person, i) => {
      tableStr += createRow(person, i);
@@ -59,6 +59,14 @@ function editEmp(i) {
 
 function saveEditEmp() {
 
+    const validationKeys = Object.keys(validationObj);
+    validationKeys.forEach(key => {
+        employeesArr[saveEmpIndex][key] = document.getElementById(key).value;
+    });
+    localStorage.setItem('employeesArr', JSON.stringify(employeesArr));
+    createTable();
+    document.getElementById('add_form_container').style.display = 'none';
+    document.getElementById('add_container').style.display = 'block';
 }
 
 function createRow(person, i) {
@@ -67,7 +75,7 @@ function createRow(person, i) {
     let rowStr = '<tr>';
     rowStr += '<td>' + rowIndex + '</td>';
     rowStr += '<td>' + person.name + '</td>';
-    rowStr += '<td>' + projectName + '</td>';
+    rowStr += '<td>' + person.age + '</td>';
     rowStr += '<td>' + person.birthdate + '</td>';
     rowStr += '<td>' + person.hired + '</td>';
     rowStr += '<td>' + person.phone + '</td>';
