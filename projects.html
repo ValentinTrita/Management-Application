@@ -5,7 +5,9 @@
   <head>
     <meta charset="UTF-8">
     <script src="js/projects.js"></script>
+    <link rel="icon" href="img/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/index.css">
     <title>Project Management Application - projects</title>
   </head>
 
@@ -25,6 +27,59 @@
       
       <div class="menu_item active">
         <a class="menu_item_link" href="projects.html">Projects</a>
+      </div>
+    </div>
+
+      <div class="add_container" id="add_container">
+        <button class="addEmpButton" onclick="displayAddForm()">Add New Project</button>
+      </div>
+      <div class="add_form_container" id="add_form_container">
+
+        <form id="add_form">
+
+           <div class="el_container">
+           <div class="el_label">
+             Project name:
+          </div>
+           <input type="text" name="name" id="name" onkeyup="checkName()">
+           <div class="error_txt" id="name_err">You must add a project name</div>
+           </div>
+           <div class="el_container">
+              <div class="el_label">
+              Start date:
+             </div>
+              <input type="text" name="start_date" id="start_date" placeholder="(YYY-MM-DD)"onkeyup="checkStartDate()">
+              <div class="error_txt" id="start_date_err">You must use the suggested format </div>
+            <div class="el_container">
+                <div class="el_label">
+                 Duration:
+               </div>
+                <input type="text" name="duration" id="duration" placeholder="1-36" onkeyup="checkElement('duration')">
+                <div class="error_txt" id="duration_err">You must add duration between 1 and 36 </div>
+                </div>
+              </div>
+            <div class="el_container">
+                <div class="el_label">
+                Phone:
+               </div>
+                <input type="text" name="phone" id="phone" placeholder="0764930192" onkeyup="checkElement('phone')">
+                <div class="error_txt" id="phone_err">You must use the suggested format </div>
+                </div>
+            <div class="el_container">
+                  <div class="el_label">
+                 Email:
+                 </div>
+                  <input type="text" name="email" id="email" placeholder="email@example.com" onkeyup="checkElement('email')">
+                  <div class="error_txt" id="email_err">You must use the suggested format </div>
+                  </div>
+
+           <div>
+            <button class="cancelButton" onclick="cancelAddForm()" type="button">Cancel</button>
+            <button class="addEmpButton" onclick="addNewUser()" type="button" disabled id="add_button">Add</button>
+            <button class="addEmpButton saveEditButton" onclick="saveEditEmp()" type="button" disabled id="edit_button">Edit</button>
+            <button type="submit" style="display: none;">Submit</button>
+           </div>
+          </form>
       </div>
   </body>
 </html>
