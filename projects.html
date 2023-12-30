@@ -53,27 +53,19 @@
             <div class="el_container">
                 <div class="el_label">
                  Duration:
-               </div>
+                </div>
                 <input type="text" name="duration" id="duration" placeholder="1-36" onkeyup="checkElement('duration')">
                 <div class="error_txt" id="duration_err">You must add duration between 1 and 36 </div>
-                </div>
+            </div>
+            <div class="el_container">
+              <div class="el_label">
+               Duration:
               </div>
-            <div class="el_container">
-                <div class="el_label">
-                Phone:
-               </div>
-                <input type="text" name="phone" id="phone" placeholder="0764930192" onkeyup="checkElement('phone')">
-                <div class="error_txt" id="phone_err">You must use the suggested format </div>
-                </div>
-            <div class="el_container">
-                  <div class="el_label">
-                 Email:
-                 </div>
-                  <input type="text" name="email" id="email" placeholder="email@example.com" onkeyup="checkElement('email')">
-                  <div class="error_txt" id="email_err">You must use the suggested format </div>
-                  </div>
-
-           <div>
+              <input type="text" name="duration" id="duration" placeholder="1-36" onkeyup="checkElement('duration')">
+              <div class="error_txt" id="duration_err">You must add duration between 1 and 36 </div>
+          </div>
+            
+            </div>
             <button class="cancelButton" onclick="cancelAddForm()" type="button">Cancel</button>
             <button class="addEmpButton" onclick="addNewUser()" type="button" disabled id="add_button">Add</button>
             <button class="addEmpButton saveEditButton" onclick="saveEditEmp()" type="button" disabled id="edit_button">Edit</button>
